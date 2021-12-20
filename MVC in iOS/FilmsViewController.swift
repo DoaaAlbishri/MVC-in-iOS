@@ -17,13 +17,15 @@ class FilmsViewController: UITableViewController {
                       data, response, error in
                           do {
                               // Try converting the JSON object to "Foundation Types" (NSDictionary, NSArray, NSString, etc.)
-                              if let jsonResult = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {
+                              if let data = data {
+                              if let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {
                                   if let results = jsonResult["results"] as? NSArray {
                                       for film in results {
                                           let filmDict = film as! NSDictionary
                                           self.films.append(filmDict["title"]! as! String)
                                       }
                                   }
+                              }
                               }
                               DispatchQueue.main.async {
                                   self.tableView.reloadData()

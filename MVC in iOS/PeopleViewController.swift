@@ -18,13 +18,15 @@ class PeopleViewController: UITableViewController {
                       data, response, error in
                           do {
                               // Try converting the JSON object to "Foundation Types" (NSDictionary, NSArray, NSString, etc.)
-                              if let jsonResult = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {
+                              if let data = data {
+                              if let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {
                                   if let results = jsonResult["results"] as? NSArray {
                                       for person in results {
                                           let personDict = person as! NSDictionary
                                           self.people.append(personDict["name"]! as! String)
                                       }
                                   }
+                              }
                               }
                               DispatchQueue.main.async {
                                   self.tableView.reloadData()
